@@ -1,0 +1,24 @@
+name: Sync Upstream (自動同步官方更新)
+
+on:
+  schedule:
+    # 每週一早上自動執行檢查
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # 允許你隨時手動點擊執行
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync and Create PR
+        uses: repo-sync/github-sync@v2
+        with:
+          source_repo: "gitleaks/gitleaks-action" 
+          source_branch: "master"                 
+          destination_branch: "upstream-update"   
+          github_token: ${{ secrets.GITHUB_TOKEN }}
