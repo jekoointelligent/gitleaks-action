@@ -9,6 +9,11 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    
+    # 【重點補上】賦予 GitHub 機器人寫入分支的權限，解決 403 錯誤
+    permissions:
+      contents: write
+      
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
